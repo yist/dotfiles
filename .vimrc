@@ -1,4 +1,7 @@
 set nocompatible
+set backupdir=$HOME/.backup//
+set directory=$HOME/.backup//
+
 "-------------------------------------------------------------------------
 " Vundle configuration
 "
@@ -8,32 +11,28 @@ set nocompatible
 " NOTE: comments after Plugin command are NOT allowed..
 "-------------------------------------------------------------------------
 filetype off      " Required by Vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" Let Vundle manage Vundle
-Plugin 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" "call vundle#begin('~/some/path/here')
+"
+" let Vundle manage Vundle, required
+ Plugin 'VundleVim/Vundle.vim'
+
 " My Plugins
 " ----------
-"Plugin 'yist/vim-risc'
 Plugin 'yist/vim-indenthi'
 Plugin 'yist/vim-codefolding'
 Plugin 'yist/vim-onewinresolve'
 Plugin 'yist/vim-style'
-Plugin 'yist/g4-inline-diff'
-command! -nargs=0 D call ToggleG4InlineDiff()
 Plugin 'yist/ScrollColors'
-"Plugin 'kien/ctrlp.vim'
-"let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-"      \ --ignore .git
-"      \ --ignore .svn
-"      \ --ignore .hg
-"      \ --ignore .DS_Store
-"      \ --ignore "**/*.pyc"
-"      \ --ignore .git5_specs
-"      \ --ignore review
-"      \ -g ""'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'sentientmachine/Pretty-Vim-Python'
+Plugin 'Chiel92/vim-autoformat'
+let g:formatters_python = ['yapf']
+let g:formatdef_yapf = "'yapf --style chromium --lines '.a:firstline.'-'.a:lastline"
+noremap ,f :Autoformat<CR>
 set rtp+=~/.fzf
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -43,7 +42,6 @@ let g:fzf_layout = { 'down': '~30%' }
 Plugin 'bufexplorer.zip'
 let g:bufExplorerSplitBelow=1        " Split new window below current.
 map <silent> <F6> :call BufExplorerHorizontalSplit()<CR>
-"Plugin 'a.vim'
 Plugin 'ShowMarks'
 let showmarks_enable=0
 hi link ShowMarksHLl LineNr         " lowercased marks
@@ -95,7 +93,10 @@ let g:tslime_always_current_session = 1
 let g:tslime_always_current_window = 1
 vmap <silent> <Leader><CR> <Plug>SendSelectionToTmux
 nmap <silent> <Leader>rv <Plug>SetTmuxVars
-filetype plugin indent on     " Required by Vundle
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 "-------------------------------------------------------------------------
 " Other configuraion
@@ -162,7 +163,7 @@ else
   if &diff
     colo jellybean
   else
-    colo camo256
+    colo molokai_dark
   endif
   set ttymouse=xterm2
   set mouse=r
