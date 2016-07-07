@@ -21,7 +21,7 @@ alias vim="/usr/bin/vim"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/home/yi_liu/google-cloud-sdk/path.bash.inc'
+#source '/home/yi_liu/google-cloud-sdk/path.bash.inc'
 
 # The next line enables shell command completion for gcloud.
-source '/home/yi_liu/google-cloud-sdk/completion.bash.inc'
+#source '/home/yi_liu/google-cloud-sdk/completion.bash.inc'
