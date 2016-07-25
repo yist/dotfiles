@@ -6,7 +6,7 @@ set directory=$HOME/.backup//
 " Vundle configuration
 "
 " To set up Vundle, run this:
-"   git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+"   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "
 " NOTE: comments after Plugin command are NOT allowed..
 "-------------------------------------------------------------------------
@@ -69,11 +69,11 @@ let g:indentLine_noConcealCursor=1
 let g:indentLine_bufNameExclude = ['.*pipertmp.*']
 " Obsoleted by YouCompleteMe
 "Plugin 'SuperTab'
-Plugin 'SirVer/ultisnips'
-let g:UltiSnipsExpandTrigger       = "<C-Y>"
-let g:UltiSnipsListSnippets        = "<C-L>"
-let g:UltiSnipsJumpForwardTrigger  = "<C-J>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
+"Plugin 'SirVer/ultisnips'
+"let g:UltiSnipsExpandTrigger       = "<C-Y>"
+"let g:UltiSnipsListSnippets        = "<C-L>"
+"let g:UltiSnipsJumpForwardTrigger  = "<C-J>"
+"let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 Plugin 'vim-scripts/Mark--Karkat'
 Plugin 'vim-scripts/grep.vim'
 Plugin 'bling/vim-airline'
