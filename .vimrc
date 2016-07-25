@@ -28,6 +28,7 @@ Plugin 'yist/vim-style'
 Plugin 'yist/ScrollColors'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Plugin 'Valloric/YouCompleteMe'
 set rtp+=~/.fzf
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -41,7 +42,7 @@ let g:formatdef_yapf = "'yapf --style chromium --lines '.a:firstline.'-'.a:lastl
 noremap ,f :Autoformat<CR>
 Plugin 'davidhalter/jedi-vim'
 autocmd FileType python setlocal completeopt-=preview
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 Plugin 'bufexplorer.zip'
 let g:bufExplorerSplitBelow=1        " Split new window below current.
 map <silent> <F6> :call BufExplorerHorizontalSplit()<CR>
@@ -53,13 +54,12 @@ hi link ShowMarksHLo Comment        " other marks
 hi link ShowMarksHLm WarningMsg     " multiple marks on the same line
 hi clear SignColumn
 hi link SignColumn LineNr
-"Plugin 'scrooloose/syntastic'
-"let g:syntastic_mode_map = { 'mode': 'passive',
-"                           \ 'active_filetypes': ['cpp', 'python', 'borg'],
-"                           \ 'passive_filetypes': [] }
-"let g:syntastic_python_checkers = ['pyflakes']
-"let g:syntastic_cpp_checkers = ['cpplint']
-"let g:syntastic_enable_signs = 1
+Plugin 'scrooloose/syntastic'
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['python'],
+                           \ 'passive_filetypes': [] }
+let g:syntastic_python_checkers = ['pyflakes']
+let g:syntastic_enable_signs = 1
 Plugin 'Yggdroot/indentLine'
 " utf-8 vertical:|¦┆│ ⟊⦚╎║┊┆┇┋⋮
 "let g:indentLine_char='⋮'

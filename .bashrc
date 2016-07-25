@@ -4,6 +4,8 @@ export LSCOLORS=ExFxBxDxCxegedabagacad
 export PATH=$HOME/bin:$PATH
 export EDITOR="vim"
 
+export LD_LIBRARY_PATH=/usr/local/lib
+
 TERM=xterm-256color
 
 #-------------------------------------------------------------
@@ -25,3 +27,6 @@ source '/home/yi_liu/google-cloud-sdk/path.bash.inc'
 
 # The next line enables shell command completion for gcloud.
 source '/home/yi_liu/google-cloud-sdk/completion.bash.inc'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
