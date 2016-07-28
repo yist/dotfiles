@@ -26,9 +26,12 @@ Plugin 'yist/vim-codefolding'
 Plugin 'yist/vim-onewinresolve'
 Plugin 'yist/vim-style'
 Plugin 'yist/ScrollColors'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/ListToggle'
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'Valloric/YouCompleteMe'
 set rtp+=~/.fzf
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -38,7 +41,7 @@ let g:fzf_layout = { 'down': '~30%' }
 Plugin 'sentientmachine/Pretty-Vim-Python'
 Plugin 'Chiel92/vim-autoformat'
 let g:formatters_python = ['yapf']
-let g:formatdef_yapf = "'yapf --style chromium --lines '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
 noremap ,f :Autoformat<CR>
 Plugin 'davidhalter/jedi-vim'
 autocmd FileType python setlocal completeopt-=preview
@@ -60,6 +63,7 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'passive_filetypes': [] }
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_enable_signs = 1
+let g:syntastic_always_populate_loc_list = 1
 Plugin 'Yggdroot/indentLine'
 " utf-8 vertical:|¦┆│ ⟊⦚╎║┊┆┇┋⋮
 "let g:indentLine_char='⋮'
@@ -125,10 +129,11 @@ set nowrap
 set wildmenu
 set background=dark
 set t_ut=
+set backspace=indent,eol,start
 syntax on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
-au FileType python setl sw=2
+au FileType python setl sw=4 tw=80
 if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
@@ -173,6 +178,9 @@ else
   set mouse=r
   nnoremap <C-K> <C-V>
 endif
+
+let mapleader=","
+
 " Key mappings
 " -------------------------
 nmap j gj
