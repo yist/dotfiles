@@ -133,7 +133,7 @@ set backspace=indent,eol,start
 syntax on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
-au FileType python setl sw=4 tw=80
+au FileType python setl sw=4 tw=100 cc=100
 if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif

@@ -1,4 +1,4 @@
-export PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h: \[\e[33m\]\w\[\e[0m\]\n\$ '
+export PS1='\n\[\033[1;33m\]\u\[\033[1;37m\]@\[\033[1;32m\]\h\[\033[1;37m\]:\[\033[1;31m\]\w\n\[\033[1;36m\]\$ \[\033[0m\]'
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 export PATH=$HOME/bin:$PATH
