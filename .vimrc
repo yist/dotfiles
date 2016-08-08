@@ -38,10 +38,10 @@ let g:fzf_layout = { 'down': '~30%' }
 Plugin 'sentientmachine/Pretty-Vim-Python'
 Plugin 'Chiel92/vim-autoformat'
 let g:formatters_python = ['yapf']
-let g:formatdef_yapf = "'yapf --style chromium --lines '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
 noremap ,f :Autoformat<CR>
 Plugin 'davidhalter/jedi-vim'
-autocmd FileType python setlocal completeopt-=preview
+autocmd FileType python setlocal completeopt-=preview cc=100
 "Plugin 'ervandew/supertab'
 Plugin 'bufexplorer.zip'
 let g:bufExplorerSplitBelow=1        " Split new window below current.
@@ -128,7 +128,6 @@ set t_ut=
 syntax on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
-au FileType python setl sw=2
 if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
