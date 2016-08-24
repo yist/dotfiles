@@ -23,7 +23,7 @@ call vundle#begin()
 " ----------
 Plugin 'yist/vim-indenthi'
 Plugin 'yist/vim-codefolding'
-Plugin 'yist/vim-onewinresolve'
+"Plugin 'yist/vim-onewinresolve'
 Plugin 'yist/vim-style'
 Plugin 'yist/ScrollColors'
 Plugin 'Valloric/YouCompleteMe'
@@ -42,6 +42,7 @@ Plugin 'sentientmachine/Pretty-Vim-Python'
 Plugin 'Chiel92/vim-autoformat'
 let g:formatters_python = ['yapf']
 let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
+Plugin 'tpope/vim-fugitive'
 noremap ,f :Autoformat<CR>
 Plugin 'davidhalter/jedi-vim'
 autocmd FileType python setlocal completeopt-=preview cc=100
