@@ -48,7 +48,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # The next line enables shell command completion for gcloud.
 #source '/home/yi_liu/google-cloud-sdk/completion.bash.inc'
 
-parse_git_branch() { 
+parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
 }
 
@@ -71,8 +71,8 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 VENV="\$(virtualenv_info)";
 
 export PS1="\n\[${COLOR_RED}\]${VENV}"
-export PS1=$PS1"\n\[\033[1;33m\]\u\[\033[1;37m\]@\[\033[1;32m\]\h\[\033[1;37m\]:"
-export PS1=$PS1"\[${COLOR_BLUE}\]\w \e[7m\[\033[33m\]$(parse_git_branch)\e[27m\n\[\033[1;36m\]\$ \[\033[0m\]"
+export PS1=$PS1"\n\[${COLOR_BROWN}\]\u\[${COLOR_LIGHT_GRAY}\]@\[${COLOR_LIGHT_GREEN}\]\h\[${COLOR_LIGHT_GRAY}\]:"
+export PS1=$PS1"\[${COLOR_BLUE}\]\w \[${COLOR_PURPLE}\]\e[7m$(parse_git_branch)\e[27m\n\[${COLOR_LIGHT_CYAN}\]\$ \[${COLOR_NC}\]"
 
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
