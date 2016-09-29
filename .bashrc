@@ -68,11 +68,12 @@ function virtualenv_info(){
 # disable the default virtualenv prompt change
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-VENV="\$(virtualenv_info)";
+VENV="\$(virtualenv_info)"
+GIT_BRANCH_NAME="\$(parse_git_branch)"
 
 export PS1="\n\[${COLOR_RED}\]${VENV}"
 export PS1=$PS1"\n\[${COLOR_BROWN}\]\u\[${COLOR_LIGHT_GRAY}\]@\[${COLOR_LIGHT_GREEN}\]\h\[${COLOR_LIGHT_GRAY}\]:"
-export PS1=$PS1"\[${COLOR_BLUE}\]\w \[${COLOR_PURPLE}\]\e[7m$(parse_git_branch)\e[27m\n\[${COLOR_LIGHT_CYAN}\]\$ \[${COLOR_NC}\]"
+export PS1=$PS1"\[${COLOR_BLUE}\]\w \[${COLOR_PURPLE}\]\e[7m${GIT_BRANCH_NAME}\e[27m\n\[${COLOR_LIGHT_CYAN}\]\$ \[${COLOR_NC}\]"
 
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
