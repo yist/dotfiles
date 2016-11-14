@@ -6,6 +6,22 @@ export EDITOR="vim"
 export LD_LIBRARY_PATH=/usr/local/lib
 
 TERM=xterm-256color
+alias vim="/usr/bin/vim"
+
+
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+  platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+  platform='mac'
+  echo "Platform: $platform"
+  alias vi='mvim -v'
+  alias vim='mvim -v'
+  export EDITOR="mvim -v"
+fi
+
+
 
 #-------------------------------------------------------------
 # Colors

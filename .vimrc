@@ -33,12 +33,16 @@ let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
+noremap <silent> <C-P> :FZF<CR>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 let g:fzf_layout = { 'down': '~30%' }
+" git grep
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
 Plugin 'sentientmachine/Pretty-Vim-Python'
 Plugin 'Chiel92/vim-autoformat'
 let g:formatters_python = ['yapf']
@@ -102,6 +106,7 @@ let g:tslime_always_current_session = 1
 let g:tslime_always_current_window = 1
 vmap <silent> <Leader><CR> <Plug>SendSelectionToTmux
 nmap <silent> <Leader>rv <Plug>SetTmuxVars
+
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 
@@ -154,7 +159,7 @@ if (has("gui_running"))
   if &diff
     colo jellybean
   else
-    colo summerfruit256
+    colo molokai
   endif
   set columns=88
   set lines=36
