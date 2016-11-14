@@ -102,6 +102,8 @@ let g:tslime_always_current_session = 1
 let g:tslime_always_current_window = 1
 vmap <silent> <Leader><CR> <Plug>SendSelectionToTmux
 nmap <silent> <Leader>rv <Plug>SetTmuxVars
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

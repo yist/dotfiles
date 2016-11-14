@@ -38,7 +38,13 @@ alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
-alias vim="/usr/bin/vim"
+host_name=`hostname`
+if [ "$host_name" = "ubuntu-trusty-1" ]
+then
+  alias vim="$HOME/usr/local/bin/vim"
+else
+  alias vim="/usr/bin/vim"
+fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
@@ -52,6 +58,50 @@ parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
 }
 
+gitbranch() {
+    export GITBRANCH=""
+
+    local repo="${_GITBRANCH_LAST_REPO-}"
+    local gitdir=""
+    [[ ! -z "$repo" ]] && gitdir="$repo/.git"
+
+    # If we don't have a last seen git repo, or we are in a different directory
+    if [[ -z "$repo" || "$PWD" != "$repo"* || ! -e "$gitdir" ]]; then
+        local cur="$PWD"
+        while [[ ! -z "$cur" ]]; do
+            if [[ -e "$cur/.git" ]]; then
+                repo="$cur"
+                gitdir="$cur/.git"
+                break
+            fi
+            cur="${cur%/*}"
+        done
+    fi
+
+    if [[ -z "$gitdir" ]]; then
+        unset _GITBRANCH_LAST_REPO
+        return 0
+    fi
+    export _GITBRANCH_LAST_REPO="${repo}"
+    local head=""
+    local branch=""
+    read head < "$gitdir/HEAD"
+    case "$head" in
+        ref:*)
+            branch="${head##*/}"
+            ;;
+        "")
+            branch=""
+            ;;
+        *)
+            branch="d:${head:0:7}"
+            ;;
+    esac
+    if [[ -z "$branch" ]]; then
+        return 0
+    fi
+    echo "$branch"
+}
 
 function virtualenv_info(){
     # Get Virtual Env
@@ -69,7 +119,8 @@ function virtualenv_info(){
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 VENV="\$(virtualenv_info)"
-GIT_BRANCH_NAME="\$(parse_git_branch)"
+#GIT_BRANCH_NAME="\$(parse_git_branch)"
+GIT_BRANCH_NAME="\$(gitbranch)"
 
 export PS1="\n\[${COLOR_RED}\]${VENV}"
 export PS1=$PS1"\n\[${COLOR_BROWN}\]\u\[${COLOR_LIGHT_GRAY}\]@\[${COLOR_LIGHT_GREEN}\]\h\[${COLOR_LIGHT_GRAY}\]:"

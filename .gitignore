@@ -1,13 +1,13 @@
-# Temporary files #                                                                
-###################                                                                
-*.swp                                                                              
-*.swo                                                                              
-*~                                                                                 
-                                                                                   
-# Python files #                                                                   
-###################                                                                
-*.pyc                                                                              
-                                                                                   
-# IPython files #                                                                                                                                                              
-###################                                                                
-.ipynb_checkpoints                                                                 
+# Temporary files #
+###################
+*.swp
+*.swo
+*~
+
+# Python files #
+###################
+*.pyc
+
+# IPython files #
+###################
+.ipynb_checkpoints/
