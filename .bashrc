@@ -6,6 +6,22 @@ export EDITOR="vim"
 export LD_LIBRARY_PATH=/usr/local/lib
 
 TERM=xterm-256color
+alias vim="/usr/bin/vim"
+
+
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+  platform='linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+  platform='mac'
+  echo "Platform: $platform"
+  alias vi='mvim -v'
+  alias vim='mvim -v'
+  export EDITOR="mvim -v"
+fi
+
+
 
 #-------------------------------------------------------------
 # The 'ls' family (this assumes you use a recent GNU ls).
@@ -17,7 +33,6 @@ alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
-alias vim="/usr/bin/vim"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
