@@ -6,8 +6,15 @@ export EDITOR="vim"
 export LD_LIBRARY_PATH=/usr/local/lib
 
 TERM=xterm-256color
-alias vim="/usr/bin/vim"
 
+host_name=`hostname`
+
+if [ "$host_name" = "ubuntu-trusty-1" ]
+then
+  alias vim="$HOME/usr/local/bin/vim"
+else
+  alias vim="/usr/bin/vim"
+fi
 
 platform='unknown'
 unamestr=`uname`
@@ -54,13 +61,6 @@ alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
-host_name=`hostname`
-if [ "$host_name" = "ubuntu-trusty-1" ]
-then
-  alias vim="$HOME/usr/local/bin/vim"
-else
-  alias vim="/usr/bin/vim"
-fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
