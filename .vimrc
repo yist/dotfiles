@@ -50,7 +50,6 @@ let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
 Plugin 'tpope/vim-fugitive'
 noremap ,f :Autoformat<CR>
 Plugin 'davidhalter/jedi-vim'
-autocmd FileType python setlocal completeopt-=preview cc=100
 "Plugin 'ervandew/supertab'
 Plugin 'bufexplorer.zip'
 let g:bufExplorerSplitBelow=1        " Split new window below current.
@@ -109,6 +108,7 @@ nmap <silent> <Leader>rv <Plug>SetTmuxVars
 
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
+Plugin 'arcticicestudio/nord-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -142,7 +142,6 @@ set backspace=indent,eol,start
 syntax on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
-au FileType python setl sw=4 tw=100 cc=100
 if has("autocmd")
     au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\"" | endif
@@ -177,7 +176,7 @@ if (has("gui_running"))
   set sessionoptions-=options
 else
   set tw=0
-  set cc=80
+  let &cc=join(range(81,300),",")
   if &diff
     colo jellybean
   else
@@ -187,6 +186,9 @@ else
   set mouse=r
   nnoremap <C-K> <C-V>
 endif
+
+autocmd FileType python setlocal completeopt-=preview sw=4 tw=100 |
+    \ let &cc=join(range(101,300),",")
 
 let mapleader=","
 
