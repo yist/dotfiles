@@ -123,7 +123,7 @@ set complete-=i
 set enc=UTF-8
 set laststatus=2
 " Size and style
-set shiftwidth=2 softtabstop=2 expandtab
+set shiftwidth=4 softtabstop=4 expandtab
 set autoindent nocindent nosmartindent
 set hlsearch
 set number
