@@ -139,17 +139,25 @@ function iterm2_print_user_vars() {
 # disable the default virtualenv prompt change
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-#VENV="\$(virtualenv_info)"
+VENV="\$(virtualenv_info)"
 #GIT_BRANCH_NAME="\$(parse_git_branch)"
 #GIT_BRANCH_NAME="\$(gitbranch)"
 
-export PS1="\n\[${COLOR_RED}\]"
+export PS1="\n\[${COLOR_RED}\]${VENV}"
 export PS1=$PS1"\n\[${COLOR_CYAN}\]\u\[${COLOR_LIGHT_GRAY}\]@\[${COLOR_LIGHT_GREEN}\]\h\[${COLOR_LIGHT_GRAY}\]:"
 export PS1=$PS1"\[${COLOR_BLUE}\]\w \[${COLOR_RED}\]\n\[${COLOR_LIGHT_CYAN}\]\$ \[${COLOR_NC}\]"
+
+
+export PIP_REQUIRE_VIRTUALENV=true
+gpip(){
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
 
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
 fi
 
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

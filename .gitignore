@@ -11,3 +11,7 @@
 # IPython files #
 ###################
 .ipynb_checkpoints/
+
+# vim-sync config #
+###################
+*.sync

@@ -25,7 +25,7 @@ Plugin 'yist/vim-indenthi'
 Plugin 'yist/vim-codefolding'
 "Plugin 'yist/vim-onewinresolve'
 Plugin 'yist/vim-style'
-Plugin 'yist/ScrollColors'
+"Plugin 'yist/ScrollColors'
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_python_binary_path = 'python'
 Plugin 'Valloric/ListToggle'
@@ -62,13 +62,14 @@ hi link ShowMarksHLo Comment        " other marks
 hi link ShowMarksHLm WarningMsg     " multiple marks on the same line
 hi clear SignColumn
 hi link SignColumn LineNr
-Plugin 'scrooloose/syntastic'
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['python'],
-                           \ 'passive_filetypes': [] }
-let g:syntastic_python_checkers = ['pyflakes']
-let g:syntastic_enable_signs = 1
-let g:syntastic_always_populate_loc_list = 1
+"Plugin 'scrooloose/syntastic'
+"let g:syntastic_mode_map = { 'mode': 'passive',
+"                           \ 'active_filetypes': ['python'],
+"                           \ 'passive_filetypes': [] }
+"let g:syntastic_python_checkers = ['pyflakes']
+"let g:syntastic_enable_signs = 1
+"let g:syntastic_always_populate_loc_list = 1
+Plugin 'w0rp/ale'
 Plugin 'Yggdroot/indentLine'
 " utf-8 vertical:|¦┆│ ⟊⦚╎║┊┆┇┋⋮
 "let g:indentLine_char='⋮'
@@ -84,6 +85,7 @@ let g:indentLine_bufNameExclude = ['.*pipertmp.*']
 "let g:UltiSnipsJumpForwardTrigger  = "<C-J>"
 "let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
 Plugin 'vim-scripts/Mark--Karkat'
+Plugin 'vim-scripts/a.vim'
 Plugin 'vim-scripts/grep.vim'
 Plugin 'bling/vim-airline'
 let g:airline#extensions#tabline#enabled = 0
@@ -109,6 +111,8 @@ nmap <silent> <Leader>rv <Plug>SetTmuxVars
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'arcticicestudio/nord-vim'
+
+Plugin 'eshion/vim-sync'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -181,6 +185,7 @@ else
     colo jellybean
   else
     colo molokai
+    hi! SpellBad term=underline ctermbg=1
   endif
   set ttymouse=xterm2
   set mouse=r
@@ -190,7 +195,11 @@ endif
 autocmd FileType python setlocal completeopt-=preview sw=4 tw=100 |
     \ let &cc=join(range(101,300),",")
 
+autocmd FileType cpp setlocal completeopt-=preview sw=2 tw=80 |
+    \ let &cc=join(range(81,300),",")
+
 let mapleader=","
+
 
 " Key mappings
 " -------------------------
