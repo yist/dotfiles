@@ -1,0 +1,13 @@
+#!/bin/sh
+if [ "upload" == $1 ]; then
+    sync_parent_path=`dirname $0`
+    sync_grandparent_path=`dirname $sync_parent_path`
+    sync_parent_dir=`basename $sync_parent_path`
+    rsync -avzR -e "ssh" --delete --progress \
+        --exclude '*/.git*' \
+        --exclude '*bazel-*' \
+        "${sync_grandparent_path}/./${sync_parent_dir}" \
+        yi.liu@ml1:/home/yi.liu/code/
+elif [ 'download' == $1 ]; then
+    echo "not supported"
+fi
