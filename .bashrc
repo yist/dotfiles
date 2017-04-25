@@ -55,7 +55,7 @@ export COLOR_LIGHT_GRAY='\e[0;37m'
 # The 'ls' family (this assumes you use a recent GNU ls).
 #-------------------------------------------------------------
 
-alias ls='ls -GFh'
+alias lh='ls -GFh'
 alias ll="ls -lv"
 alias lr='ll -R'           #  Recursive ls.
 alias la='ll -A'           #  Show hidden files.
