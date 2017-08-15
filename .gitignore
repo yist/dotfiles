@@ -15,3 +15,8 @@
 # vim-sync config #
 ###################
 *.sync
+.sync
+
+*.egg-info
+*.egg-info/
+*.egg-info/*

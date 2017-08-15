@@ -3,36 +3,28 @@ set backupdir=$HOME/.backup//
 set directory=$HOME/.backup//
 
 "-------------------------------------------------------------------------
-" Vundle configuration
-"
-" To set up Vundle, run this:
-"   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-"
-" NOTE: comments after Plugin command are NOT allowed..
+" Package Management
 "-------------------------------------------------------------------------
-filetype off      " Required by Vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-" "call vundle#begin('~/some/path/here')
-"
-" let Vundle manage Vundle, required
- Plugin 'VundleVim/Vundle.vim'
+packadd minpac
+call minpac#init()
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+command! PackUpdate packadd minpac | call minpac#update()
+command! PackClean  packadd minpac | call minpac#clean()
 
-" My Plugins
-" ----------
-Plugin 'yist/vim-indenthi'
-Plugin 'yist/vim-codefolding'
-"Plugin 'yist/vim-onewinresolve'
-Plugin 'yist/vim-style'
-"Plugin 'yist/ScrollColors'
-Plugin 'Valloric/YouCompleteMe'
+call minpac#add('yist/vim-style')
+
+call minpac#add('bling/vim-airline')
+
+call minpac#add('Valloric/YouCompleteMe')
 let g:ycm_python_binary_path = 'python'
-Plugin 'Valloric/ListToggle'
+
+call minpac#add('Valloric/ListToggle')
 let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+
+call minpac#add('junegunn/fzf')
+
+call minpac#add('junegunn/fzf.vim')
 set rtp+=/usr/local/opt/fzf
 noremap <silent> <C-P> :FZF<CR>
 let g:fzf_action = {
@@ -43,80 +35,44 @@ let g:fzf_layout = { 'down': '~30%' }
 " git grep
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
-Plugin 'sentientmachine/Pretty-Vim-Python'
-Plugin 'Chiel92/vim-autoformat'
+
+call minpac#add('Chiel92/vim-autoformat')
 let g:formatters_python = ['yapf']
 let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
-Plugin 'tpope/vim-fugitive'
-noremap ,f :Autoformat<CR>
-Plugin 'davidhalter/jedi-vim'
-"Plugin 'ervandew/supertab'
-Plugin 'bufexplorer.zip'
-let g:bufExplorerSplitBelow=1        " Split new window below current.
-map <silent> <F6> :call BufExplorerHorizontalSplit()<CR>
-Plugin 'ShowMarks'
-let showmarks_enable=0
-hi link ShowMarksHLl LineNr         " lowercased marks
-hi link ShowMarksHLu LineNr         " uppercased marks
-hi link ShowMarksHLo Comment        " other marks
-hi link ShowMarksHLm WarningMsg     " multiple marks on the same line
-hi clear SignColumn
-hi link SignColumn LineNr
-"Plugin 'scrooloose/syntastic'
-"let g:syntastic_mode_map = { 'mode': 'passive',
-"                           \ 'active_filetypes': ['python'],
-"                           \ 'passive_filetypes': [] }
-"let g:syntastic_python_checkers = ['pyflakes']
-"let g:syntastic_enable_signs = 1
-"let g:syntastic_always_populate_loc_list = 1
-Plugin 'w0rp/ale'
-Plugin 'Yggdroot/indentLine'
-" utf-8 vertical:|¦┆│ ⟊⦚╎║┊┆┇┋⋮
-"let g:indentLine_char='⋮'
-let g:indentLine_char=':'
-let g:indentLine_color_term=234
-let g:indentLine_noConcealCursor=1
-let g:indentLine_bufNameExclude = ['.*pipertmp.*']
-" Obsoleted by YouCompleteMe
-"Plugin 'SuperTab'
-"Plugin 'SirVer/ultisnips'
-"let g:UltiSnipsExpandTrigger       = "<C-Y>"
-"let g:UltiSnipsListSnippets        = "<C-L>"
-"let g:UltiSnipsJumpForwardTrigger  = "<C-J>"
-"let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
-Plugin 'vim-scripts/Mark--Karkat'
-Plugin 'vim-scripts/a.vim'
-Plugin 'vim-scripts/grep.vim'
-Plugin 'bling/vim-airline'
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#buffer_nr_show = 0
-let g:airline#extensions#tabline#buffer_nr_format = '%s: '
-let g:airline#extensions#tabline#fnamemod = ':~:.'
-let g:airline#extensions#syntastic#enabled = 1
-" ❯ ❩ ❭ ❫ 〉⟩ ▶  »
-" ❮ ❨ ❰ ❪〈 ⟨
-"let g:airline#extensions#tabline#left_sep = '⸩'
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_left_sep = '⸩'
-let g:airline_right_sep = '⸨'
-"let g:airline_theme='simple'
-let g:airline_powerline_fonts = 0
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'jgdavey/tslime.vim'
+
+call minpac#add('davidhalter/jedi-vim')
+
+call minpac#add('jlanzarotta/bufexplorer')
+
+call minpac#add('w0rp/ale')
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+let g:ale_python_yapf_executable='yapf'
+let g:ale_python_yapf_use_global=1
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_text_changed = 1
+let g:ale_sign_column_always = 1
+
+call minpac#add('jgdavey/tslime.vim')
 let g:tslime_always_current_session = 1
 let g:tslime_always_current_window = 1
 vmap <silent> <Leader><CR> <Plug>SendSelectionToTmux
 nmap <silent> <Leader>rv <Plug>SetTmuxVars
 
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
-Plugin 'arcticicestudio/nord-vim'
+call minpac#add('eshion/vim-sync')
 
-Plugin 'eshion/vim-sync'
+set termguicolors
+colo space-vim-dark
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+    set wildignore+=.git\*,.hg\*,.svn\*
+else
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+endif
 
 "-------------------------------------------------------------------------
 " Other configuraion
@@ -127,7 +83,7 @@ set complete-=i
 set enc=UTF-8
 set laststatus=2
 " Size and style
-set shiftwidth=4 softtabstop=4 expandtab
+set shiftwidth=4 softtabstop=4 expandtab smarttab
 set autoindent nocindent nosmartindent
 set hlsearch
 set number
@@ -143,6 +99,12 @@ set wildmenu
 set background=dark
 set t_ut=
 set backspace=indent,eol,start
+set lazyredraw
+set magic
+
+" Use Unix as the standard file type
+set ffs=unix,mac,dos
+
 syntax on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
@@ -158,39 +120,6 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 :autocmd InsertEnter,InsertLeave * set cul!
 " complimentary highlight group
 hi! link ColorColumn CursorLine
-if (has("gui_running"))
-  if &diff
-    colo jellybean
-  else
-    colo molokai
-  endif
-  set columns=88
-  set lines=36
-  set lcs=tab:↦\ ,trail:·,extends:§,precedes:§
-  set sbr=\ \ »\ \ \ \ \
-  set cpoptions+=n
-  set swb=usetab
-  set guioptions-=b
-  set guioptions-=h
-  set guioptions-=T
-  set guioptions+=a
-  "set guifont=Luxi_Mono:h11:cANSI
-  "set guifont=Luxi\ Mono\ 18
-  set guifont=LMMono9\ 12
-  set sessionoptions-=options
-else
-  set tw=0
-  let &cc=join(range(81,300),",")
-  if &diff
-    colo jellybean
-  else
-    colo molokai
-    hi! SpellBad term=underline ctermbg=1
-  endif
-  set ttymouse=xterm2
-  set mouse=r
-  nnoremap <C-K> <C-V>
-endif
 
 autocmd FileType python setlocal completeopt-=preview sw=4 tw=100 |
     \ let &cc=join(range(101,300),",")
@@ -207,9 +136,6 @@ nmap j gj
 nmap k gk
 vmap j gj
 vmap k gk
-map <M-Left> :bp<CR>
-map <M-Right> :bn<CR>
-map <M-Down> :bn<CR>bd#<CR>
 map <F12> :set hls!<CR>
 map <F2> :w<CR>
 map <silent> <F6> :BufExplorer<CR>
@@ -225,14 +151,11 @@ nmap <silent> ` :e #<CR>
 map <silent> gc :%s/[ <Tab>]\+$//<CR>
 " enter/leave paste mode.
 map gp :set invpaste<CR>:set paste?<CR>
-" select color scheme
-command! -nargs=0 C call FavColo()
-" Terminal config choice
-command! -nargs=0 T call DoNotMessUpTerminal()
 " Browse current file directory
 command! -nargs=0 E :e %:p:h
 " Browse current file directory in a new tab
 command! -nargs=0 B :tabnew %:p:h
+
 if (has("gui_running"))
   " Change window height
   map <M-[> :set lines-=5<CR>
@@ -245,6 +168,7 @@ else
   vmap <C-C> :set paste<CR><ESC>"vy
   vmap <C-V> "vgP
 endif
+
 " Builtin plugin settings
 " -------------------------
 " for netrw
@@ -252,6 +176,7 @@ let g:netrw_sort_sequence     = '[\/]$,*'
 let g:netrw_list_hide = '.*\.fuse_hidden'
 " Check file change
 au CursorHold * checktime
+
 " White spaces
 " -------------------------
 fun! TrimWhitespace()
@@ -260,6 +185,35 @@ fun! TrimWhitespace()
     call setpos('.', l:save_cursor)
 endfun
 command! TrimWhitespace call TrimWhitespace()
+
+function! CmdLine(str)
+    exe "menu Foo.Bar :" . a:str
+    emenu Foo.Bar
+    unmenu Foo
+endfunction
+
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", "\\/.*'$^~[]")
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'gv'
+        call CmdLine("Ack '" . l:pattern . "' " )
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
 " All sorts of chars
 " ---------------------
 "  · ‥ ⁖ ⁘ ⁙ ⁚ ⁛ ⊙ ⋖ ⋗ ⟇ ⟑ ⦑ ⦒ ･ 𐄁

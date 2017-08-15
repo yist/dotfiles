@@ -1,6 +1,6 @@
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export PATH=$HOME/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$HOME/google-cloud-sdk/bin:$PATH
 export EDITOR="vim"
 
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -14,6 +14,7 @@ then
   alias vim="$HOME/usr/local/bin/vim"
 else
   alias vim="/usr/bin/vim"
+  alias mvim="/usr/local/Cellar/macvim/8.0-134/bin/mvim"
 fi
 
 platform='unknown'
@@ -149,13 +150,65 @@ export PS1=$PS1"\[${COLOR_BLUE}\]\w \[${COLOR_RED}\]\n\[${COLOR_LIGHT_CYAN}\]\$ 
 
 
 export PIP_REQUIRE_VIRTUALENV=true
-gpip(){
+gpip() {
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+DISABLE_AUTO_TITLE="true"
+tt () {
+  echo -e "\033];$@\007"
 }
 
 if [ -f /etc/bash_completion ]; then
  . /etc/bash_completion
 fi
+
+export HOMEBREW_NO_ANALYTICS=1
+
+# FZF tmux switch session
+fs() {
+  local session
+  session=$(tmux list-sessions -F "#{session_name}" | \
+    fzf --query="$1" --select-1 --exit-0) &&
+  tmux switch-client -t "$session"
+}
+
+# FZF - kill process
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+# FZF Git
+# fbr - checkout git branch
+# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# fco - checkout git branch/tag
+fco() {
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout $(echo "$target" | awk '{print $2}')
+}
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
