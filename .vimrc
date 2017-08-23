@@ -1,6 +1,9 @@
 set nocompatible
 set backupdir=$HOME/.backup//
 set directory=$HOME/.backup//
+" Learder key
+let mapleader=","
+
 
 "-------------------------------------------------------------------------
 " Package Management
@@ -35,10 +38,52 @@ let g:fzf_layout = { 'down': '~30%' }
 " git grep
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
+command! -bang -nargs=* Rg 
+  \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
+function! s:ag_to_qf(line)
+  let parts = split(a:line, ':')
+  return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
+        \ 'text': join(parts[3:], ':')}
+endfunction
+
+function! s:ag_handler(lines)
+  if len(a:lines) < 2 | return | endif
+
+  let cmd = get({'ctrl-x': 'split',
+               \ 'ctrl-v': 'vertical split',
+               \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
+  let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
+
+  let first = list[0]
+  execute cmd escape(first.filename, ' %#\')
+  execute first.lnum
+  execute 'normal!' first.col.'|zz'
+
+  if len(list) > 1
+    call setqflist(list)
+    copen
+    wincmd p
+  endif
+endfunction
+
+command! -nargs=* Ag call fzf#run({
+\ 'source':  printf('ag --nogroup --column --color "%s"',
+\                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
+\ 'sink*':    function('<sid>ag_handler'),
+\ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
+\            '--multi --bind=ctrl-a:select-all,ctrl-d:deselect-all '.
+\            '--color hl:68,hl+:110',
+\ 'down':    '50%'
+\ })
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+vnoremap <silent> <leader>ag "zy :Ag <C-R>z<CR>
+
 
 call minpac#add('Chiel92/vim-autoformat')
 let g:formatters_python = ['yapf']
 let g:formatdef_yapf = "'yapf --lines '.a:firstline.'-'.a:lastline"
+noremap ,f :Autoformat<CR>
 
 call minpac#add('davidhalter/jedi-vim')
 
@@ -53,6 +98,8 @@ let g:ale_python_yapf_use_global=1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
 let g:ale_sign_column_always = 1
+let g:ale_sign_error = '▷'
+let g:ale_sign_warning = '⁛'
 
 call minpac#add('jgdavey/tslime.vim')
 let g:tslime_always_current_session = 1
@@ -84,7 +131,7 @@ set enc=UTF-8
 set laststatus=2
 " Size and style
 set shiftwidth=4 softtabstop=4 expandtab smarttab
-set autoindent nocindent nosmartindent
+set autoindent nocindent smartindent
 set hlsearch
 set number
 set incsearch
@@ -127,7 +174,11 @@ autocmd FileType python setlocal completeopt-=preview sw=4 tw=100 |
 autocmd FileType cpp setlocal completeopt-=preview sw=2 tw=80 |
     \ let &cc=join(range(81,300),",")
 
-let mapleader=","
+" netrw
+" -------------------------
+let g:netrw_liststyle=3
+let g:netrw_winsize=20
+let g:netrw_wiw=30
 
 
 " Key mappings
