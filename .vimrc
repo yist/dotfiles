@@ -38,7 +38,7 @@ let g:fzf_layout = { 'down': '~30%' }
 " git grep
 command! -bang -nargs=* GGrep
   \ call fzf#vim#grep('git grep --line-number '.shellescape(<q-args>), 0, <bang>0)
-command! -bang -nargs=* Rg 
+command! -bang -nargs=* Rg
   \ call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
 function! s:ag_to_qf(line)
@@ -87,6 +87,10 @@ noremap ,f :Autoformat<CR>
 
 call minpac#add('davidhalter/jedi-vim')
 
+call minpac#add('Vimjas/vim-python-pep8-indent')
+
+call minpac#add('tmhedberg/SimpylFold')
+
 call minpac#add('jlanzarotta/bufexplorer')
 
 call minpac#add('w0rp/ale')
@@ -109,8 +113,9 @@ nmap <silent> <Leader>rv <Plug>SetTmuxVars
 
 call minpac#add('eshion/vim-sync')
 
+hi clear
 set termguicolors
-colo space-vim-dark
+colo smyck
 
 
 " Ignore compiled files
@@ -131,7 +136,7 @@ set enc=UTF-8
 set laststatus=2
 " Size and style
 set shiftwidth=4 softtabstop=4 expandtab smarttab
-set autoindent nocindent smartindent
+set autoindent nocindent nosmartindent
 set hlsearch
 set number
 set incsearch
@@ -153,6 +158,7 @@ set magic
 set ffs=unix,mac,dos
 
 syntax on
+filetype plugin indent on
 cabbr <expr> %% expand('%:p:h')
 au FileType qf setlocal wrap linebreak
 if has("autocmd")
@@ -168,11 +174,10 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " complimentary highlight group
 hi! link ColorColumn CursorLine
 
-autocmd FileType python setlocal completeopt-=preview sw=4 tw=100 |
-    \ let &cc=join(range(101,300),",")
-
+autocmd FileType python setlocal fdm=indent completeopt-=preview sw=4 tw=100 |
+    \ let &cc=101
 autocmd FileType cpp setlocal completeopt-=preview sw=2 tw=80 |
-    \ let &cc=join(range(81,300),",")
+    \ let &cc=81
 
 " netrw
 " -------------------------
@@ -206,6 +211,14 @@ map gp :set invpaste<CR>:set paste?<CR>
 command! -nargs=0 E :e %:p:h
 " Browse current file directory in a new tab
 command! -nargs=0 B :tabnew %:p:h
+" Copy/Paste to system clipboard
+if has('unix')
+    if has('mac')     " Works for Homebrew VIM
+        set clipboard=unnamed
+    else
+        set clipboard=unnamedplus
+    endif
+endif
 
 if (has("gui_running"))
   " Change window height
@@ -217,7 +230,7 @@ if (has("gui_running"))
   map <M-/> :set linespace&<CR>
 else
   vmap <C-C> :set paste<CR><ESC>"vy
-  vmap <C-V> "vgP
+  vmap <C-Q> "vgP
 endif
 
 " Builtin plugin settings
