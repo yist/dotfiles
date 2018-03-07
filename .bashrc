@@ -1,6 +1,6 @@
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export PATH=/usr/local/bin:$HOME/bin:$HOME/google-cloud-sdk/bin:$PATH
+export PATH=/usr/local/bin:$HOME/bin:$HOME/google-cloud-sdk/bin:$HOME/go/bin:/usr/local/go/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
 export EDITOR="vim"
 
 export LD_LIBRARY_PATH=/usr/local/lib
@@ -13,8 +13,8 @@ if [ "$host_name" = "ubuntu-trusty-1" ]
 then
   alias vim="$HOME/usr/local/bin/vim"
 else
-  alias vim="/usr/bin/vim"
-  alias mvim="/usr/local/Cellar/macvim/8.0-134/bin/mvim"
+  alias vim="/usr/local/bin/vim"
+  alias mvim="/usr/local/Cellar/macvim/8.0-144_4/bin/mvim"
 fi
 
 platform='unknown'
@@ -178,7 +178,26 @@ fco() {
   git checkout $(echo "$target" | awk '{print $2}')
 }
 
+alias g5=git-review
+
 export FZF_DEFAULT_COMMAND='ag --ignore .git -g ""'
 export FZF_DEFAULT_OPTS='--height 30% --reverse --border'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
+if [ -f $HOME/bin/bazel-complete.bash ]; then
+  source $HOME/bin/bazel-complete.bash
+fi
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/yi.liu/google-cloud-sdk/path.bash.inc' ]; then source '/Users/yi.liu/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/yi.liu/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/yi.liu/google-cloud-sdk/completion.bash.inc'; fi

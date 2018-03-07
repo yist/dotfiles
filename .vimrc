@@ -17,6 +17,19 @@ command! PackClean  packadd minpac | call minpac#clean()
 call minpac#add('yist/vim-style')
 
 call minpac#add('bling/vim-airline')
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 call minpac#add('Valloric/YouCompleteMe')
 let g:ycm_python_binary_path = 'python'
@@ -67,15 +80,11 @@ function! s:ag_handler(lines)
   endif
 endfunction
 
-command! -nargs=* Ag call fzf#run({
-\ 'source':  printf('ag --nogroup --column --color "%s"',
-\                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
-\ 'sink*':    function('<sid>ag_handler'),
-\ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
-\            '--multi --bind=ctrl-a:select-all,ctrl-d:deselect-all '.
-\            '--color hl:68,hl+:110',
-\ 'down':    '50%'
-\ })
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag_raw('--hidden --nogroup --color ' . <q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 vnoremap <silent> <leader>ag "zy :Ag <C-R>z<CR>
 
@@ -102,8 +111,8 @@ let g:ale_python_yapf_use_global=1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_text_changed = 1
 let g:ale_sign_column_always = 1
-let g:ale_sign_error = '▷'
-let g:ale_sign_warning = '⁛'
+let g:ale_sign_error = '-⦒'
+let g:ale_sign_warning = '▸▸'
 
 call minpac#add('jgdavey/tslime.vim')
 let g:tslime_always_current_session = 1
@@ -111,7 +120,13 @@ let g:tslime_always_current_window = 1
 vmap <silent> <Leader><CR> <Plug>SendSelectionToTmux
 nmap <silent> <Leader>rv <Plug>SetTmuxVars
 
+call minpac#add('fatih/vim-go')
+let g:go_metalinter_autosave = 0
+let g:go_list_autoclose = 1
+
 call minpac#add('eshion/vim-sync')
+
+call minpac#add('airblade/vim-gitgutter')
 
 hi clear
 set termguicolors
@@ -178,6 +193,7 @@ autocmd FileType python setlocal fdm=indent completeopt-=preview sw=4 tw=100 |
     \ let &cc=101
 autocmd FileType cpp setlocal completeopt-=preview sw=2 tw=80 |
     \ let &cc=81
+autocmd FileType go setlocal tabstop=8 shiftwidth=8 softtabstop=0 noexpandtab
 
 " netrw
 " -------------------------
@@ -219,6 +235,10 @@ if has('unix')
         set clipboard=unnamedplus
     endif
 endif
+" Switch to Terminal-Normal mode
+if has('terminal')
+    tnoremap <Esc> <C-W>N
+endif
 
 if (has("gui_running"))
   " Change window height
@@ -231,6 +251,10 @@ if (has("gui_running"))
 else
   vmap <C-C> :set paste<CR><ESC>"vy
   vmap <C-Q> "vgP
+endif
+
+if &diff
+    color molokai
 endif
 
 " Builtin plugin settings

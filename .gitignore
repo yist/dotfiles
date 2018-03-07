@@ -12,6 +12,10 @@
 ###################
 .ipynb_checkpoints/
 
+# VIMDIFF file #
+###################
+*.orig
+
 # vim-sync config #
 ###################
 *.sync
