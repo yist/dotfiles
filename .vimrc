@@ -20,7 +20,8 @@ call minpac#add('bling/vim-airline')
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 0
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -127,6 +128,8 @@ let g:go_list_autoclose = 1
 call minpac#add('eshion/vim-sync')
 
 call minpac#add('airblade/vim-gitgutter')
+
+call minpac#add('yuttie/hydrangea-vim')
 
 hi clear
 set termguicolors

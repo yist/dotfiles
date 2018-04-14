@@ -14,7 +14,7 @@ then
   alias vim="$HOME/usr/local/bin/vim"
 else
   alias vim="/usr/local/bin/vim"
-  alias mvim="/usr/local/Cellar/macvim/8.0-144_4/bin/mvim"
+  alias mvim="/usr/local/bin/vim"
 fi
 
 platform='unknown'
