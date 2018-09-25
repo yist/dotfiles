@@ -23,7 +23,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 
 call minpac#add('lifepillar/vim-mucomplete')
 set completeopt-=preview
-set completeopt+=longest,menuone,noselect
+set completeopt+=menuone,noinsert
 let g:mucomplete#enable_auto_at_startup = 1
 let g:mucomplete#delayed_completion = 1
 let g:mucomplete#always_use_completeopt = 1
