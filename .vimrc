@@ -4,6 +4,15 @@ set directory=$HOME/.backup//
 " Learder key
 let mapleader=","
 
+" Detect OS
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
 
 "-------------------------------------------------------------------------
 " Package Management
@@ -67,10 +76,22 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 au FileType qf setlocal wrap linebreak
 
-" Change cursor shape in different mode. Works for
-"  - iTerm2 on Mac OS X
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+if g:os == "Darwin"
+    " Change cursor shape in different mode. Works for
+    "  - iTerm2 on Mac OS X
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+elseif g:os == "Linux"
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' | 
+    \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
+
 " Toggle cursor line highlight with Normal/Insert mode change
 :autocmd InsertEnter,InsertLeave * set cul!
 " complimentary highlight group
@@ -192,6 +213,11 @@ endfunction
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+
+" Style adjustment
+hi clear MatchParen
+hi link MatchParen Title
 
 " All sorts of chars
 " ---------------------
