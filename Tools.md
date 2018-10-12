@@ -11,3 +11,6 @@ https://github.com/so-fancy/diff-so-fancy
 
 ## noti
 https://github.com/variadico/noti
+
+## Tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
