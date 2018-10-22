@@ -35,7 +35,7 @@ alias la='ll -A'           #  Show hidden files.
 alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
 
-export PIP_REQUIRE_VIRTUALENV=true
+export PIP_REQUIRE_VIRTUALENV=false
 gpip() {
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
@@ -192,7 +192,11 @@ if [ -f $HOME/bin/bazel-complete.bash ]; then
   source $HOME/bin/bazel-complete.bash
 fi
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+#test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+# Pyenv
+eval "$(pyenv init -)"
+
 
 
 
