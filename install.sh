@@ -2,7 +2,9 @@
 set -e
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files=".vimrc .bashrc .screenrc .tmux.conf .gitignore .notify_when_done.bash"    # list of files/folders to symlink in homedir
+files=".vimrc .pkgs.vimrc
+.bashrc .linux.bash .mac.bash .prompt.bash .fzf_config.bash .sensible.bash
+.screenrc .tmux.conf .gitignore .notify_when_done.bash"    # list of files/folders to symlink in homedir
 
 [ -d ~/.backup ] || mkdir ~/.backup
 
@@ -26,10 +28,4 @@ for file in $files; do
     ln -s -f $dir/$file ~/$file
 done
 
-set +e 
-# Install Vundle
-#git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# Install tmux-gitbar
-#git clone https://github.com/aurelien-rainone/tmux-gitbar.git ~/.tmux-gitbar
-git clone https://github.com/k-takata/minpac.git \
-    ~/.vim/pack/minpac/opt/minpac
+set +e
