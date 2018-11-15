@@ -24,3 +24,17 @@
 *.egg-info
 *.egg-info/
 *.egg-info/*
+
+.DS_Store
+
+# Node
+node_modules/
+
+# VSCode
+.vscode/
+.vscode/settings.json
+secretnotes.md
+
+# Jupyter
+.ipynb_checkpoints
+

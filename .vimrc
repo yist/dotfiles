@@ -79,8 +79,12 @@ au FileType qf setlocal wrap linebreak
 if g:os == "Darwin"
     " Change cursor shape in different mode. Works for
     "  - iTerm2 on Mac OS X
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    "let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    "let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    "  - Kitty on Max OS X
+    let &t_SI.="\e[5 q"
+    let &t_SR.="\e[4 q"
+    let &t_EI.="\e[1 q"
 elseif g:os == "Linux"
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
   au InsertEnter,InsertChange *

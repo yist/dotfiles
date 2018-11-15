@@ -1,9 +1,8 @@
 alias vim="/usr/local/bin/vim"
 alias mvim="/usr/local/bin/mvim"
 
-alias vi='mvim -v'
-alias vim='mvim -v'
-export EDITOR="mvim -v"
+alias vi='vim'
+export EDITOR="vim"
 
 export DISABLE_AUTO_TITLE="true"
 tt () {

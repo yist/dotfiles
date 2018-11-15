@@ -3,7 +3,7 @@ set -e
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files=".vimrc .pkgs.vimrc
-.bashrc .linux.bash .mac.bash .prompt.bash .fzf_config.bash .sensible.bash
+.bashrc .linux.bash .mac.bash .prompt.bash .bash-powerline.sh .fzf_config.bash .sensible.bash
 .screenrc .tmux.conf .gitignore .notify_when_done.bash"    # list of files/folders to symlink in homedir
 
 [ -d ~/.backup ] || mkdir ~/.backup

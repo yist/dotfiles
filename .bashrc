@@ -29,37 +29,28 @@ gpip() {
 }
 
 
-if [ -f /etc/bash_completion ]; then
- . /etc/bash_completion
-fi
-
 if [ -f $HOME/bin/bazel-complete.bash ]; then
   source $HOME/bin/bazel-complete.bash
 fi
 
-
-if [ -f ~/.prompt.bash ]; then
-  source ~/.prompt.bash
+if [ -f $HOME/.pyenvs/python3/bin/activate ]; then
+  alias py365="source $HOME/.pyenvs/python3/bin/activate"
 fi
+
+
+#if [ -f ~/.prompt.bash ]; then
+#  source ~/.prompt.bash
+#fi
+[ -f ~/.bash-powerline.sh ] && source ~/.bash-powerline.sh
 
 if [ -f ~/.fzf_config.bash ]; then
   source ~/.fzf_config.bash
 fi
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-alias g5=git-review
-
-
-test -e "${HOME}/code/git-subrepo/.rc" && source "${HOME}/code/git-subrepo/.rc"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]
-then
- source "${HOME}/google-cloud-sdk/path.bash.inc"
-fi
 
 # Pyenv
-eval "$(pyenv init -)"
+#eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
