@@ -10,11 +10,11 @@ host_name=`hostname`
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-  platform='linux'
-  source $HOME/.linux.bash
+    platform='linux'
+    source $HOME/.linux.bash
 elif [[ "$unamestr" == 'Darwin' ]]; then
-  platform='mac'
-  source $HOME/.mac.bash
+    platform='mac'
+    source $HOME/.mac.bash
 fi
 echo "Platform: $platform"
 
@@ -25,16 +25,37 @@ alias tree='tree -Csuh'    #  Nice alternative to 'recursive ls' ...
 
 export PIP_REQUIRE_VIRTUALENV=false
 gpip() {
-   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
+
+s3ls() {
+    aws s3 ls "$@"
+}
+
+s3cat() {
+    aws s3 cp --quiet "$@" /dev/stdout
+    echo
+}
+
+reload_search_commands() {
+    local search_command_script="$HOME/gist/search_memos/search_stack.sh"
+    if [ -f $search_command_script ]; then
+        echo "sourcing $search_command_script"
+        source $search_command_script
+    else
+        echo "ERROR: can't find $search_command_script"
+    fi
+}
+alias rsc='reload_search_commands'
+
 
 
 if [ -f $HOME/bin/bazel-complete.bash ]; then
-  source $HOME/bin/bazel-complete.bash
+    source $HOME/bin/bazel-complete.bash
 fi
 
 if [ -f $HOME/.pyenvs/python3/bin/activate ]; then
-  alias py365="source $HOME/.pyenvs/python3/bin/activate"
+    alias py365="source $HOME/.pyenvs/python3/bin/activate"
 fi
 
 
@@ -44,7 +65,7 @@ fi
 [ -f ~/.bash-powerline.sh ] && source ~/.bash-powerline.sh
 
 if [ -f ~/.fzf_config.bash ]; then
-  source ~/.fzf_config.bash
+    source ~/.fzf_config.bash
 fi
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -57,3 +78,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+source ~/.mw_aliases

@@ -5,17 +5,19 @@
 
 __powerline() {
     # Colorscheme
-    readonly RESET='\[\033[m\]'
-    readonly REVERSE_TEXT='\[\e[7m\]'
-    readonly COLOR_CWD='\[\033[0;34m\]' # blue
-    readonly COLOR_GIT='\[\033[0;36m\]' # cyan
-    readonly COLOR_SUCCESS='\[\033[0;32m\]' # green
-    readonly COLOR_FAILURE='\[\033[0;31m\]' # red
+    RESET='\[\033[m\]'
+    REVERSE_TEXT='\[\e[7m\]'
+    #COLOR_CWD='\[\033[0;97;45m\]' # white on magenta
+    COLOR_CWD='\[\033[48;5;53m\]' # purple bg
+    COLOR_CWD_SUFFIX='\[\033[38;5;53m\]' # purple
+    COLOR_GIT='\[\033[0;36m\]' # cyan
+    COLOR_SUCCESS='\[\033[0;32m\]' # green
+    COLOR_FAILURE='\[\033[0;31m\]' # red
 
-    readonly SYMBOL_GIT_BRANCH='⑂'
-    readonly SYMBOL_GIT_MODIFIED='*'
-    readonly SYMBOL_GIT_PUSH='↑'
-    readonly SYMBOL_GIT_PULL='↓'
+    SYMBOL_GIT_BRANCH='⑂'
+    SYMBOL_GIT_MODIFIED='*'
+    SYMBOL_GIT_PUSH='↑'
+    SYMBOL_GIT_PULL='↓'
 
     if [[ -z "$PS_SYMBOL" ]]; then
       case "$(uname)" in
@@ -77,7 +79,9 @@ __powerline() {
             local symbol="${COLOR_FAILURE}${PS_SYMBOL}${RESET}"
         fi
 
-        local cwd="${REVERSE_TEXT}\w${RESET}▶"
+        local RARROW="❥"
+
+        local cwd="${COLOR_CWD}\w${RESET}${COLOR_CWD_SUFFIX}${RARROW}${RESET}"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
         # provided strings, which would cause security issues.
@@ -85,16 +89,17 @@ __powerline() {
         # Related fix in git-bash: https://github.com/git/git/blob/9d77b0405ce6b471cb5ce3a904368fc25e55643d/contrib/completion/git-prompt.sh#L324
         if shopt -q promptvars; then
             __powerline_git_info="$(__git_info)"
-            local git="$COLOR_GIT\${__powerline_git_info}${RESET}${REVERSE_TEXT}▶${RESET}"
+            local git="$COLOR_GIT\${__powerline_git_info}${RESET}${REVERSE_TEXT}${RARROW}${RESET}"
         else
             # promptvars is disabled. Avoid creating unnecessary env var.
-            local git="$COLOR_GIT$(__git_info)${RESET}${REVERSE_TEXT}▶${RESET}"
+            local git="$COLOR_GIT$(__git_info)${RESET}${REVERSE_TEXT}${RARROW}${RESET}"
         fi
 
         if test -z "$VIRTUAL_ENV" ; then
-            local pyvenv="${REVERSE_TEXT}venv:off${RESET}▶"
+            local pyvenv="${REVERSE_TEXT}venv:off${RESET}⦒"
         else
-            local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}▶"
+            #local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}▶"
+            local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}${RARROW}"
         fi
 
         PS1="${cwd}${git}${pyvenv}\n$symbol "
