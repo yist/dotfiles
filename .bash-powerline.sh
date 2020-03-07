@@ -22,6 +22,7 @@ __powerline() {
     SYMBOL_GIT_MODIFIED='*'
     SYMBOL_GIT_PUSH='↑'
     SYMBOL_GIT_PULL='↓'
+    SYMBOL_EMPTY='✗'
     SYMBOL_HLINE='┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈'
 
     SYMBOL_MW_UPPER='◣◣'
@@ -51,7 +52,7 @@ __powerline() {
             ref=$($git_eng describe --tags --always 2>/dev/null)
         fi
 
-        [[ -n "$ref" ]] || return  # not a git repo
+        [[ -n "$ref" ]] || printf "${SYMBOL_EMPTY}"  # not a git repo
 
         local marks
 
@@ -67,7 +68,7 @@ __powerline() {
         done < <($git_eng status --porcelain --branch 2>/dev/null)  # note the space between the two <
 
         # print the git branch segment without a trailing newline
-        printf "$ref$marks"
+        printf " $ref$marks "
     }
 
     set_virtualenv() {
@@ -98,10 +99,10 @@ __powerline() {
         # Related fix in git-bash: https://github.com/git/git/blob/9d77b0405ce6b471cb5ce3a904368fc25e55643d/contrib/completion/git-prompt.sh#L324
         if shopt -q promptvars; then
             __powerline_git_info="$(__git_info)"
-            local git="${REVERSE_TEXT} ${__powerline_git_info} "
+            local git="${REVERSE_TEXT}${__powerline_git_info}"
         else
             # promptvars is disabled. Avoid creating unnecessary env var.
-            local git="${REVERSE_TEXT} $(__git_info) "
+            local git="${REVERSE_TEXT}$(__git_info)"
         fi
 
         if test -z "$VIRTUAL_ENV" ; then
