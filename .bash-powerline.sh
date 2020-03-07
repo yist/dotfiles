@@ -90,7 +90,7 @@ __powerline() {
         #local RARROW="❥" # ┋
         local RARROW=""
 
-        local cwd="${COLOR_CWD}\w${RESET}${COLOR_CWD_SUFFIX}${RARROW}${RESET}"
+        local cwd="${COLOR_CWD}\w "
         # Bash by default expands the content of PS1 unless promptvars is disabled.
         # We must use another layer of reference to prevent expanding any user
         # provided strings, which would cause security issues.
@@ -98,24 +98,25 @@ __powerline() {
         # Related fix in git-bash: https://github.com/git/git/blob/9d77b0405ce6b471cb5ce3a904368fc25e55643d/contrib/completion/git-prompt.sh#L324
         if shopt -q promptvars; then
             __powerline_git_info="$(__git_info)"
-            local git="$COLOR_GIT\${__powerline_git_info}${RESET}${REVERSE_TEXT}${RARROW}${RESET}"
+            local git="${REVERSE_TEXT} ${__powerline_git_info} "
         else
             # promptvars is disabled. Avoid creating unnecessary env var.
-            local git="$COLOR_GIT$(__git_info)${RESET}${REVERSE_TEXT}${RARROW}${RESET}"
+            local git="${REVERSE_TEXT} $(__git_info) "
         fi
 
         if test -z "$VIRTUAL_ENV" ; then
-            local pyvenv="${REVERSE_TEXT}venv:off${RESET}⦒"
+            local pyvenv="${RESET}${COLOR_CWD} venv:off "
         else
             #local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}▶"
-            local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}${RARROW}"
+            local pyvenv="${RESET}${COLOR_CWD} venv:`basename \"$VIRTUAL_ENV\"` "
         fi
-	local tm="${COLOR_CWD_SUFFIX}\t${RESET}"
+	local tm="${REVERSE_TEXT} \t ${RESET}"
 	local mwu="${COLOR_MW}${SYMBOL_MW_UPPER}${RESET}"
 	local mwl="${COLOR_MW}${SYMBOL_MW_LOWER}${RESET}"
-	local div="${COLOR_DIM}${SYMBOL_HLINE}${RESET}"
+	#local div="${COLOR_DIM}${SYMBOL_HLINE}${RESET}"
 
-        PS1="${div}\n${mwu}${cwd}$symbol ${git}$symbol ${pyvenv}$symbol ${tm}\n${mwl}"
+        #PS1="${div}\n${mwu}${cwd}$symbol ${git}$symbol ${pyvenv}$symbol ${tm}\n${mwl}"
+	PS1="${mwu}${cwd}${git}${pyvenv}${tm}\n${mwl}"
     }
 
     PROMPT_COMMAND="ps1${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
