@@ -2,7 +2,9 @@
 
 ## Uncomment to disable git info
 #POWERLINE_GIT=0
-
+#
+# ◣◣
+# ◤◤ 
 __powerline() {
     # Colorscheme
     RESET='\[\033[m\]'
@@ -13,11 +15,17 @@ __powerline() {
     COLOR_GIT='\[\033[0;36m\]' # cyan
     COLOR_SUCCESS='\[\033[0;32m\]' # green
     COLOR_FAILURE='\[\033[0;31m\]' # red
+    COLOR_DIM='\[\033[38;5;236m\]' # gray
+    COLOR_MW='\[\033[38;5;54m\]' # purple
 
     SYMBOL_GIT_BRANCH='⑂'
     SYMBOL_GIT_MODIFIED='*'
     SYMBOL_GIT_PUSH='↑'
     SYMBOL_GIT_PULL='↓'
+    SYMBOL_HLINE='┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈'
+
+    SYMBOL_MW_UPPER='◣◣'
+    SYMBOL_MW_LOWER='◤◤'
 
     if [[ -z "$PS_SYMBOL" ]]; then
       case "$(uname)" in
@@ -79,7 +87,8 @@ __powerline() {
             local symbol="${COLOR_FAILURE}${PS_SYMBOL}${RESET}"
         fi
 
-        local RARROW="❥"
+        #local RARROW="❥" # ┋
+        local RARROW=""
 
         local cwd="${COLOR_CWD}\w${RESET}${COLOR_CWD_SUFFIX}${RARROW}${RESET}"
         # Bash by default expands the content of PS1 unless promptvars is disabled.
@@ -101,8 +110,12 @@ __powerline() {
             #local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}▶"
             local pyvenv="${REVERSE_TEXT}venv:`basename \"$VIRTUAL_ENV\"`${RESET}${RARROW}"
         fi
+	local tm="${COLOR_CWD_SUFFIX}\t${RESET}"
+	local mwu="${COLOR_MW}${SYMBOL_MW_UPPER}${RESET}"
+	local mwl="${COLOR_MW}${SYMBOL_MW_LOWER}${RESET}"
+	local div="${COLOR_DIM}${SYMBOL_HLINE}${RESET}"
 
-        PS1="${cwd}${git}${pyvenv}\n$symbol "
+        PS1="${div}\n${mwu}${cwd}$symbol ${git}$symbol ${pyvenv}$symbol ${tm}\n${mwl}"
     }
 
     PROMPT_COMMAND="ps1${PROMPT_COMMAND:+; $PROMPT_COMMAND}"

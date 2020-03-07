@@ -1,7 +1,8 @@
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
-export PATH=/usr/local/bin:$HOME/bin:$HOME/google-cloud-sdk/bin:$HOME/go/bin:/usr/local/go/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
-export EDITOR="vim"
+export PATH=/usr/local/bin:$HOME/bin:/usr/local/go/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+export EDITOR="nvim"
 export LD_LIBRARY_PATH=/usr/local/lib
 export TERM=xterm-256color
 
@@ -48,6 +49,10 @@ reload_search_commands() {
 }
 alias rsc='reload_search_commands'
 
+if [ -f $HOME/bin/forgit/forgit.plugin.sh ]; then
+    source $HOME/bin/forgit/forgit.plugin.sh
+fi
+
 
 
 if [ -f $HOME/bin/bazel-complete.bash ]; then
@@ -76,6 +81,10 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GOPATH="${HOME}/go"
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 source ~/.mw_aliases

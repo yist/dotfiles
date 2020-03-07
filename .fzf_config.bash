@@ -1,5 +1,18 @@
-export FZF_COMPLETION_TRIGGER='..'
+export FZF_COMPLETION_TRIGGER='...'
 export FZF_COMPLETION_OPTS='+c -x'
+
+confirm() {
+    # call with a prompt string or use a default
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case "$response" in
+        [yY][eE][sS]|[yY]) 
+            true
+            ;;
+        *)
+            false
+            ;;
+    esac
+}
 
 # FZF tmux switch session
 fs() {
@@ -35,7 +48,7 @@ fbr() {
   local branches branch
   branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
   branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+           fzf-tmux -d $(( 5 + $(wc -l <<< "$branches") )) +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
@@ -52,6 +65,14 @@ fco() {
     (echo "$tags"; echo "$branches") |
     fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
   git checkout $(echo "$target" | awk '{print $2}')
+}
+
+# fbrd - Fuzzy Branch Delete
+fbrd() {
+  local branches branch
+  branches=$(git branch) &&
+    branch=$(echo "$branches" | fzf +m) && confirm &&
+    git branch -D $(echo "$branch" | sed "s/.* //") && fbrd
 }
 
 alias g5=git-review

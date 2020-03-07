@@ -19,17 +19,17 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 
 call minpac#add('prabirshrestha/async.vim')
-call minpac#add('prabirshrestha/vim-lsp')
-call minpac#add('ryanolsonx/vim-lsp-python')
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}},
-                \ })
-endif
+"call minpac#add('prabirshrestha/vim-lsp')
+"call minpac#add('ryanolsonx/vim-lsp-python')
+"if executable('pyls')
+"    " pip install python-language-server
+"    au User lsp_setup call lsp#register_server({
+"                \ 'name': 'pyls',
+"                \ 'cmd': {server_info->['pyls']},
+"                \ 'whitelist': ['python'],
+"                \ 'workspace_config': {'pyls': {'plugins': {'pydocstyle': {'enabled': v:true}}}},
+"                \ })
+"endif
 call minpac#add('prabirshrestha/asyncomplete.vim')
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -38,7 +38,7 @@ let g:asyncomplete_smart_completion = 1
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_remove_duplicates = 1
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
+"call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
 
 "call minpac#add('Valloric/YouCompleteMe')
 "let g:ycm_python_binary_path = 'python'
